@@ -4,3 +4,12 @@ body {
 h1, h3 {
   color: #b92020;
 }
+.slogan {
+  color: gray;
+  font-size: 18px;
+  font-style: italic;
+}
+.title {
+  color : #b92020;
+  font-size: 48px;
+}
