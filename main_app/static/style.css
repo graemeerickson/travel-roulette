@@ -4,6 +4,19 @@ body {
 h1, h3 {
   color: #b92020;
 }
+.destination-box {
+  font-size: 36px!important;
+  width: 40%!important;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #b92020;
+  box-shadow: 0 1px 0 0 #b92020;
+}
+.search-section {
+  margin-top: 25px;
+  text-align: center;
+}
 .slogan {
   color: gray;
   font-size: 18px;
