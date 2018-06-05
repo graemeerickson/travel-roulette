@@ -12,11 +12,16 @@
 <body>
   <nav>
     <div class="nav-wrapper red darken-4">
-      <a href="/" class="brand-logo title grey-text text-lighten-2">Travel Roulette</a>
+      <a href="{% url 'index' %}" class="brand-logo title grey-text text-lighten-2">Travel Roulette</a>
       <!-- <a href="" class="brand-logo slogan">Travel spontaneously</a> -->
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/login" class="grey-text text-lighten-2">Login</a></li>
-        <li><a href="#" class="grey-text text-lighten-2">Signup</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' user.username %}" class="grey-text text-lighten-2">Profile</a></li>
+          <li><a href="{% url 'logout' %}" class="grey-text text-lighten-2">Logout</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}" class="grey-text text-lighten-2">Login</a></li>
+          <li><a href="#" class="grey-text text-lighten-2">Signup</a></li>
+        {% endif %}
       </ul>
     </div>
   </nav>
