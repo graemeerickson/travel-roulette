@@ -1,12 +1,15 @@
 from .forms import LoginForm
 from .models import Destination
+from datetime import date
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
-import json
+import simplejson as json
 import random
+import requests
 
 def index(request):
   destinations = Destination.objects.all()
@@ -42,10 +45,73 @@ def logout_view(request):
   return HttpResponseRedirect('/')
 
 def destinations_view(request):
-  destinations_count = Destination.objects.count()
-  random_destination_index = random.randint(1,destinations_count)
-  random_destination = Destination.objects.get(id=random_destination_index)
-  destination = {'city': random_destination.city, 'country': random_destination.country}
+  random_destination_id = random.randint(1,Destination.objects.count())
+  random_destination = Destination.objects.get(id=random_destination_id)
+  foursquare_version = '20180605'
+  foursquare_url = 'https://api.foursquare.com/v2/venues/explore'
+  foursquare_params_sights = dict(
+    client_id=settings.CLIENT_ID,
+    client_secret=settings.CLIENT_SECRET,
+    v=foursquare_version,
+    near=random_destination.city + ', ' + random_destination.country,
+    section='sights',
+    locale='en',
+    limit=3
+  )
+  foursquare_params_food = dict(
+    client_id=settings.CLIENT_ID,
+    client_secret=settings.CLIENT_SECRET,
+    v=foursquare_version,
+    near=random_destination.city + ', ' + random_destination.country,
+    section='food',
+    locale='en',
+    limit=3
+  )
+  foursquare_params_drinks = dict(
+    client_id=settings.CLIENT_ID,
+    client_secret=settings.CLIENT_SECRET,
+    v=foursquare_version,
+    near=random_destination.city + ', ' + random_destination.country,
+    section='drinks',
+    locale='en',
+    limit=3
+  )
+  resp_sights = requests.get(url=foursquare_url, params=foursquare_params_sights).json()
+  resp_food = requests.get(url=foursquare_url, params=foursquare_params_food).json()
+  resp_drinks = requests.get(url=foursquare_url, params=foursquare_params_drinks).json()
+
+  destination = { 'city': random_destination.city, 'country': random_destination.country, 'sights': [], 'food': [], 'drinks': [] }
+
+  for i in range(3):
+    destination['sights'].append({
+      'sight_name': resp_sights['response']['groups'][0]['items'][i]['venue']['name'],
+      'long': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['lng'],
+      'lat': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['lat'],
+      'address_street': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['address'],
+      'address_city': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['city'],
+      'address_country': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['country'],
+      'address_formatted': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
+      'category': resp_sights['response']['groups'][0]['items'][i]['venue']['categories'][0]['name'],
+    })
+    destination['food'].append({
+      'restaurant_name': resp_food['response']['groups'][0]['items'][i]['venue']['name'],
+      'long': resp_food['response']['groups'][0]['items'][i]['venue']['location']['lng'],
+      'lat': resp_food['response']['groups'][0]['items'][i]['venue']['location']['lat'],
+      'address_street': resp_food['response']['groups'][0]['items'][i]['venue']['location']['address'],
+      'address_city': resp_food['response']['groups'][0]['items'][i]['venue']['location']['city'],
+      'address_country': resp_food['response']['groups'][0]['items'][i]['venue']['location']['country'],
+      'address_formatted': resp_food['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
+    })
+    destination['drinks'].append({
+      'bar_name': resp_drinks['response']['groups'][0]['items'][i]['venue']['name'],
+      'long': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['lng'],
+      'lat': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['lat'],
+      'address_street': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['address'],
+      'address_city': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['city'],
+      'address_country': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['country'],
+      'address_formatted': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
+    })
+
   return JsonResponse(destination)
 
 def pretty_request(request):
