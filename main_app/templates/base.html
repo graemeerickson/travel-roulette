@@ -13,14 +13,14 @@
   <nav>
     <div class="nav-wrapper red darken-4">
       <a href="{% url 'index' %}" class="brand-logo title grey-text text-lighten-2">Travel Roulette</a>
-      <!-- <a href="" class="brand-logo slogan">Travel spontaneously</a> -->
+      <!-- <a href="{% url 'index' %}" class="slogan grey-text text-lighten-2">Travel spontaneously</a> -->
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
-          <li><a href="{% url 'profile' user.username %}" class="grey-text text-lighten-2">Profile</a></li>
-          <li><a href="{% url 'logout' %}" class="grey-text text-lighten-2">Logout</a></li>
+          <li><a href="{% url 'profile' user.username %}" class="nav-link grey-text text-lighten-2">Profile</a></li>
+          <li><a href="{% url 'logout' %}" class="nav-link grey-text text-lighten-2">Logout</a></li>
         {% else %}
-          <li><a href="{% url 'login' %}" class="grey-text text-lighten-2">Login</a></li>
-          <li><a href="#" class="grey-text text-lighten-2">Signup</a></li>
+          <li><a href="{% url 'login' %}" class="nav-link grey-text text-lighten-2">Login</a></li>
+          <li><a href="#" class="nav-link grey-text text-lighten-2">Signup</a></li>
         {% endif %}
       </ul>
     </div>
@@ -30,5 +30,7 @@
      {% endblock %}
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="{% static 'app.js' %}"></script>
 </body>
 </html>
