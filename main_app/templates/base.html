@@ -4,17 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width,initial-scale=1 maximum-scale=1.0, user-scalable=0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.css">
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Pacifico" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
   <title>Travel Roulette</title>
 </head>
 <body>
   <nav>
     <div class="nav-wrapper red darken-4">
-      <a href="{% url 'index' %}" class="brand-logo title grey-text text-lighten-2">Travel Roulette</a>
+      <a href="{% url 'index' %}" class="brand-logo center title grey-text text-lighten-2">Travel Roulette</a>
       <!-- <a href="{% url 'index' %}" class="slogan grey-text text-lighten-2">Travel spontaneously</a> -->
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
           <li><a href="{% url 'profile' user.username %}" class="nav-link grey-text text-lighten-2">Profile</a></li>
           <li><a href="{% url 'logout' %}" class="nav-link grey-text text-lighten-2">Logout</a></li>
@@ -25,12 +29,21 @@
       </ul>
     </div>
   </nav>
+  <ul class="sidenav" id="mobile-demo">
+    <!-- {% if user.is_authenticated %} -->
+      <li><a href="{% url 'profile' user.username %}" class="grey-text text-lighten-2">Profile</a></li>
+      <li><a href="{% url 'logout' %}" class="grey-text text-lighten-2">Logout</a></li>
+    <!-- {% else %}
+      <li><a href="{% url 'login' %}" class="grey-text text-lighten-2">Login</a></li>
+      <li><a href="#" class="grey-text text-lighten-2">Signup</a></li>
+    {% endif %} -->
+  </ul>
   <div class="container">
      {% block content %}
      {% endblock %}
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="{% static 'app.js' %}"></script>
 </body>
 </html>
