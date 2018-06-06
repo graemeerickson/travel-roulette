@@ -24,6 +24,12 @@ h1, h3 {
   border-bottom: 1px solid #b92020;
   box-shadow: 0 1px 0 0 #b92020;
 }
+.search-button {
+  font-size: 1.6rem!important;
+}
+/* #search-button {
+  font-size: 1.6rem;
+} */
 .search-section {
   margin-top: 25px;
   text-align: center;
@@ -35,6 +41,8 @@ h1, h3 {
 }
 .title {
   color : #b92020;
+  font-family: 'Pacifico', cursive;
+  /* font-family: 'Kaushan Script', cursive; */
   font-size: 36px!important;
 }
 
@@ -44,7 +52,7 @@ h1, h3 {
     line-height: 35px;
   }
   .title {
-    font-size: 24px !important;
+    font-size: 32px !important;
   }
 }
 @media only screen and (max-width: 732px) {
