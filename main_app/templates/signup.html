@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<h3>Signup</h3>
+<form method="POST" action=".">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <!-- <input type="submit" value="Submit" /> -->
+  <input type="submit" class="waves-effect waves-light btn red darken-4 grey-text text-lighten-2" value="Sign up" />
+</form>
+
+{% endblock %}
