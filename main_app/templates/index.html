@@ -2,23 +2,88 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="jumbotron">
+<!-- <div class="jumbotron">
   <h3 class="jumbotron-text">Embrace spontaneity with your next adventure.<br/>Find out your destination below.</h3>
-</div>
+</div> -->
 <div class="search-section">
   <div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <input class="destination-box center-align" placeholder="Seattle" disabled value="" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="submit-button col s12">
-          <button type="submit" class="search-button waves-effect waves-light btn-large red darken-4 grey-text text-lighten-2" id="search-button">Go</button>
-        </div>
-      </div>
-    </form>
+    <div class="input-field col s12">
+      <input class="destination-box center-align" placeholder="Seattle" disabled value="" />
+    </div>
   </div>
+  <form method="POST" action="">
+    {% csrf_token %}
+    <div class="row">
+      <div class="input-field col s6">
+        <select class="trip-purpose-select" id="trip-purpose-select">
+          <option value="1" selected>Any</option>
+          <option value="2">Adventure</option>
+          <option value="3">Beach</option>
+          <option value="4">Ski</option>
+          <option value="5">Just somewhere warm!</option>
+          <option value="4">Just somewhere cold!</option>
+        </select>
+        <label for="trip-purpose-select">Trip purpose</label>
+      </div>
+      <div class="input-field col s6">
+        <!-- <div class="select-wrapper"> -->
+          <select class="region-select">
+            <option value="1" selected>Any</option>
+            <option value="2">Asia</option>
+            <option value="3">Central America</option>
+            <option value="4">Europe</option>
+            <option value="5">Middle East</option>
+            <option value="6">North America</option>
+            <option value="7">Oceania</option>
+            <option value="8">South America</option>
+          </select>
+          <label>Region</label>
+      </div>
+      <!-- <div class="input-field col s4">
+        <select class="month-select">
+          <option value="1" selected>Any</option>
+          <option value="2">Jan</option>
+          <option value="3">Feb</option>
+          <option value="4">Mar</option>
+          <option value="5">Apr</option>
+          <option value="6">May</option>
+          <option value="7">Jun</option>
+          <option value="8">Jul</option>
+          <option value="9">Aug</option>
+          <option value="10">Sep</option>
+          <option value="11">Oct</option>
+          <option value="12">Nov</option>
+          <option value="13">Dec</option>
+        </select>
+        <label>Month</label>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="submit-button col s12">
+        <input type="submit" class="search-button waves-effect waves-light btn-large red darken-4 grey-text text-lighten-2" id="search-button" value="Go" />
+      </div>
+    </div>
+  </form>
 </div>
+<section>
+  <div class="section-sites">
+    <hr><h4 class="destination-detail-heading">Top Sights</h4>
+    <div class="row sites-row">
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-food">
+    <hr><h4 class="destination-detail-heading">Top Restaurants</h4>
+    <div class="row food-row">
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-drinks">
+    <hr><h4 class="destination-detail-heading">Top Bars</h4>
+    <div class="row drinks-row">
+    </div>
+  </div>
+</section>
 {% endblock %}
