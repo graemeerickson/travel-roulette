@@ -2,33 +2,34 @@
 {% load staticfiles %}
 
 {% block content %}
-<!-- <div class="jumbotron">
-  <h3 class="jumbotron-text">Embrace spontaneity with your next adventure.<br/>Find out your destination below.</h3>
-</div> -->
 <div class="search-section">
+  <div class="row jumbotron">
+    <h4 class="jumbotron-text">Not sure where to go on your next trip?</h4>
+    <h4 class="jumbotron-text">Let chance be your guide.</h4>
+  </div>
   <div class="row">
     <div class="input-field col s12">
-      <input class="destination-box center-align" placeholder="Seattle" disabled value="" />
+      <input class="destination-box center-align" id="destination-box" placeholder="" disabled value="" />
     </div>
   </div>
   <form method="POST" action="">
     {% csrf_token %}
     <div class="row">
-      <div class="input-field col s6">
-        <select class="trip-purpose-select" id="trip-purpose-select">
-          <option value="1" selected>Any</option>
+      <div class="input-field col s6 grey-text text-darken-4">
+        <select class="trip-purpose-select grey-text text-darken-4" id="trip-purpose-select">
+          <option value="1" selected class="grey-text text-darken-4">Anything</option>
           <option value="2">Adventure</option>
           <option value="3">Beach</option>
           <option value="4">Ski</option>
           <option value="5">Just somewhere warm!</option>
           <option value="4">Just somewhere cold!</option>
         </select>
-        <label for="trip-purpose-select">Trip purpose</label>
+        <label class="select-label" for="trip-purpose-select">What are you looking for?</label>
       </div>
       <div class="input-field col s6">
         <!-- <div class="select-wrapper"> -->
           <select class="region-select">
-            <option value="1" selected>Any</option>
+            <option value="1" selected>Anywhere</option>
             <option value="2">Asia</option>
             <option value="3">Central America</option>
             <option value="4">Europe</option>
@@ -37,7 +38,7 @@
             <option value="7">Oceania</option>
             <option value="8">South America</option>
           </select>
-          <label>Region</label>
+          <label class="select-label" for="region-select">In what part of the world?</label>
       </div>
       <!-- <div class="input-field col s4">
         <select class="month-select">
@@ -60,30 +61,24 @@
     </div>
     <div class="row">
       <div class="submit-button col s12">
-        <input type="submit" class="search-button waves-effect waves-light btn-large red darken-4 grey-text text-lighten-2" id="search-button" value="Go" />
+        <input type="submit" class="waves-effect waves-light btn-large red darken-4 grey-text text-lighten-2 search-button" id="search-button" value="Go!" />
       </div>
     </div>
   </form>
 </div>
-<section>
-  <div class="section-sites">
-    <hr><h4 class="destination-detail-heading">Top Sights</h4>
-    <div class="row sites-row">
-    </div>
-  </div>
+<section class="results-section">
+  <section>
+    <div class="destination-top-section" id="destination-top-section-map"></div>
+  </section>
+  <section>
+    <div class="destination-top-section" id="destination-top-section-sights"></div>
+  </section>
+  <section>
+    <div class="destination-top-section" id="destination-top-section-food"></div>
+  </section>
+  <section>
+    <div class="destination-top-section" id="destination-top-section-drinks"></div>
+  </section>
 </section>
-<section>
-  <div class="section-food">
-    <hr><h4 class="destination-detail-heading">Top Restaurants</h4>
-    <div class="row food-row">
-    </div>
-  </div>
-</section>
-<section>
-  <div class="section-drinks">
-    <hr><h4 class="destination-detail-heading">Top Bars</h4>
-    <div class="row drinks-row">
-    </div>
-  </div>
-</section>
+
 {% endblock %}
