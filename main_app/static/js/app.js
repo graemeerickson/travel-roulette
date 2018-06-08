@@ -35,7 +35,6 @@ $(document).ready(function () {
       method: 'POST',
       data: {'trip_purpose': tripPurposeSelection, 'selected_region': regionSelection},
       success: function (response) {
-        console.log(response)
         element.val(response.city);
         appendDestinationDetails(response)
       },
@@ -45,7 +44,6 @@ $(document).ready(function () {
 });
 
 const appendMap = (latitude, longitude, mapboxToken) => {
-  console.log(mapboxToken)
   $('#destination-top-section-map').empty()
   let html1 = `<div class='row map-row' id='map' style='width: 100%; height: 350px;'></div>`
   $('#destination-top-section-map').append(html1)
