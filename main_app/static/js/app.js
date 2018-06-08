@@ -1,22 +1,33 @@
-let destinationSight1, destinationSight2, destinationSight3;
-let destinationFood1, destinationFood2, destinationFood3;
-let destinationDrinks1, destinationDrinks2, destinationDrinks3;
-let destinationSights = [];
-let destinationFood = [];
-let destinationDrinks = [];
+let map;
 
 $(document).ready(function () {
   $('.sidenav').sidenav();
   $('select').formSelect();
+  window.sr = ScrollReveal();
+  sr.reveal('.search-section');
+
+  let delay = 1000;
+  let cities = ['Barcelona', 'Cancun','Dubai','Tokyo','Maui','Seattle'];
+  let input = document.getElementById('destination-box');
+  input.setAttribute('placeholder', 'Seattle')
+
+  for (let i = 0; i < cities.length; i++) {
+    set(cities[i], i * delay);
+  }
+
+  function set(city, d) {
+    setTimeout(function () {
+      setInterval(function () {
+        input.setAttribute('placeholder', city);
+      }, delay * cities.length);
+    }, d);
+  }
 
   $('.search-button').on('click', function (event) {
     event.preventDefault();
     let tripPurposeSelection = $('.trip-purpose-select')[0].selectedOptions[0].innerText;
     let regionSelection = $('.region-select')[0].selectedOptions[0].innerText;
     // let monthSelection = $('.month-select')[0].selectedOptions[0].innerText;
-    console.log(tripPurposeSelection);
-    console.log(regionSelection);
-    // console.log(monthSelection);
     let element = $('.destination-box');
     $.ajax({
       headers: { "X-CSRFToken": getCookie("csrftoken") },
@@ -27,23 +38,42 @@ $(document).ready(function () {
         console.log(response)
         element.val(response.city);
         appendDestinationDetails(response)
-      }
+      },
+      error: handleError
     })
   })
 });
 
+const appendMap = (latitude, longitude, mapboxToken) => {
+  console.log(mapboxToken)
+  $('#destination-top-section-map').empty()
+  let html1 = `<div class='row map-row' id='map' style='width: 100%; height: 350px;'></div>`
+  $('#destination-top-section-map').append(html1)
+  let html = `<script>
+                mapboxgl.accessToken = '${mapboxToken}';
+                map = new mapboxgl.Map({
+                  container: 'map',
+                  center: [${longitude},${latitude}],
+                  zoom: 11,
+                  style: 'mapbox://styles/mapbox/streets-v9'
+                });
+            </script>`
+  $('.map-row').append(html)
+}
+
 const appendSights = (sights) => {
-  $('.sites-row').empty()
+  $('#destination-top-section-sights').empty()
+  let html1 = `<hr><h4 class="destination-detail-heading">Top Sights</h4>
+              <div class="row sites-row"></div>`
+  $('#destination-top-section-sights').append(html1)
+
   sights.forEach( (val) => {
     let html = `<div class="col m12 l4">
-                  <h5 class="header">${val.sight_name}</h5>
                   <div class="card horizontal">
-                    <div class="card-image">
-                      <img src="https://lorempixel.com/100/190/nature/6">
-                    </div>
                     <div class="card-stacked">
-                      <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information.</p>
+                      <div class="card-content destination-content">
+                        <h6 class="destination-card-name">${val.sight_name}</h6>
+                        <p>${val.address_formatted}</p>
                       </div>
                     </div>
                   </div>
@@ -52,17 +82,18 @@ const appendSights = (sights) => {
   })
 }
 const appendFood = (food) => {
-  $('.food-row').empty()
+  $('#destination-top-section-food').empty()
+  let html1 = `<hr><h4 class="destination-detail-heading">Top Restaurants</h4>
+              <div class="row food-row"></div>`
+  $('#destination-top-section-food').append(html1)
+
   food.forEach((val) => {
     let html = `<div class="col m12 l4">
-                  <h5 class="header">${val.restaurant_name}</h5>
                   <div class="card horizontal">
-                    <div class="card-image">
-                      <img src="https://lorempixel.com/100/190/nature/6">
-                    </div>
                     <div class="card-stacked">
-                      <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information.</p>
+                      <div class="card-content destination-content">
+                        <h6 class="destination-card-name">${val.restaurant_name}</h6>
+                        <p>${val.address_formatted}</p>
                       </div>
                     </div>
                   </div>
@@ -71,17 +102,17 @@ const appendFood = (food) => {
   })
 }
 const appendDrinks = (drinks) => {
-  $('.drinks-row').empty()
+  $('#destination-top-section-drinks').empty()
+  let html1 = `<hr><h4 class="destination-detail-heading">Top Bars</h4>
+              <div class="row drinks-row"></div>`
+  $('#destination-top-section-drinks').append(html1)
   drinks.forEach((val) => {
     let html = `<div class="col m12 l4">
-                  <h5 class="header">${val.bar_name}</h5>
                   <div class="card horizontal">
-                    <div class="card-image">
-                      <img src="https://lorempixel.com/100/190/nature/6">
-                    </div>
                     <div class="card-stacked">
-                      <div class="card-content">
-                        <p>I am a very simple card. I am good at containing small bits of information.</p>
+                      <div class="card-content destination-content">
+                        <h6 class="destination-card-name">${val.bar_name}</h6>
+                        <p>${val.address_formatted}</p>
                       </div>
                     </div>
                   </div>
@@ -91,9 +122,26 @@ const appendDrinks = (drinks) => {
 }
 
 const appendDestinationDetails = (destination) => {
+  $('#destination-top-section-error').empty()
+  sr.reveal('.results-section');
+  appendMap(destination.lat, destination.long, destination.mapbox_api_token)
   appendSights(destination.sights);
   appendFood(destination.food);
   appendDrinks(destination.drinks);
+}
+
+const handleError = () => {
+  $('#destination-top-section-error').empty()
+  $('#destination-top-section-map').empty()
+  $('#destination-top-section-sights').empty()
+  $('#destination-top-section-food').empty()
+  $('#destination-top-section-drinks').empty()
+  
+  let html = `<div id='destination-top-section-error'>
+                <h6>We couldn't find any destinations meeting your criteria. Adjust your criteria and try again!</h6>
+              </div>`
+  
+  $('.results-section').append(html)
 }
 
 function getCookie(c_name) {
