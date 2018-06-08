@@ -113,9 +113,6 @@ def destinations_view(request):
       'sight_name': resp_sights['response']['groups'][0]['items'][i]['venue']['name'],
       'long': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['lng'],
       'lat': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['lat'],
-      'address_street': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['address'],
-      'address_city': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['city'],
-      'address_country': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['country'],
       'address_formatted': resp_sights['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
       'category': resp_sights['response']['groups'][0]['items'][i]['venue']['categories'][0]['name'],
     })
@@ -123,18 +120,12 @@ def destinations_view(request):
       'restaurant_name': resp_food['response']['groups'][0]['items'][i]['venue']['name'],
       'long': resp_food['response']['groups'][0]['items'][i]['venue']['location']['lng'],
       'lat': resp_food['response']['groups'][0]['items'][i]['venue']['location']['lat'],
-      'address_street': resp_food['response']['groups'][0]['items'][i]['venue']['location']['address'],
-      'address_city': resp_food['response']['groups'][0]['items'][i]['venue']['location']['city'],
-      'address_country': resp_food['response']['groups'][0]['items'][i]['venue']['location']['country'],
       'address_formatted': resp_food['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
     })
     destination['drinks'].append({
       'bar_name': resp_drinks['response']['groups'][0]['items'][i]['venue']['name'],
       'long': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['lng'],
       'lat': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['lat'],
-      'address_street': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['address'],
-      'address_city': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['city'],
-      'address_country': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['country'],
       'address_formatted': resp_drinks['response']['groups'][0]['items'][i]['venue']['location']['formattedAddress'],
     })
 
