@@ -37,10 +37,11 @@ ul.dropdown-content.select-dropdown li span {
 }
 .jumbotron {
   line-height: 150px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   text-align: center;
 }
 .jumbotron-text {
+  font-weight: bold;
   margin: 15px;
 }
 .nav-link {
@@ -103,9 +104,12 @@ ul.dropdown-content.select-dropdown li span {
   }
 }
 @media only screen and (max-width: 554px) {
+  .jumbotron {
+    margin-bottom: 0px;
+  }
   .jumbotron-text {
-    font-size: 17px;
-    line-height: 18px;
+    font-size: 26px;
+    line-height: 30px;
   }
   .nav-wrapper {
     padding: 0 5px;
