@@ -1,12 +1,47 @@
-h1, h3 {
+h1, h3, h4 {
   color: #b92020; /*rgb(169,46,39)*/
+  font-family: 'Roboto',sans-serif;
+}
+ul.dropdown-content.select-dropdown li span {
+  color: #000;
+}
+.button-text {
+  color: white!important;
+}
+.destination-box {
+  border-bottom: none!important;
+  color: #1485CC !important;
+  font-size: 54px!important;
+  height: 64px!important;
+}
+.destination-card-name {
+  color: #1485CC;
+  font-weight: bold;
+}
+.destination-content {
+  padding-top: 6px!important;
+}
+.destination-detail-heading {
+  color: #b92020;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 30px;
+}
+/* label focus color */
+.input-field input[type=text]:focus+label {
+  color: #1485CC;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #1485CC;
+  box-shadow: 0 1px 0 0 #1485CC;
 }
 .jumbotron {
-  margin-top: 40px;
+  line-height: 150px;
+  margin-bottom: 5px;
   text-align: center;
 }
 .jumbotron-text {
-  line-height: 60px;
+  margin: 15px;
 }
 .nav-link {
   font-size: 18px;
@@ -14,27 +49,9 @@ h1, h3 {
 .nav-wrapper {
   padding: 0 60px;
 }
-.destination-box {
-  border-bottom: none!important;
-  color: #b92020!important;
-  font-size: 54px!important;
-}
-.destination-detail-heading {
-  color: #b92020;
-  font-family: 'Pacifico', cursive;
-}
-/* label focus color */
-.input-field input[type=text]:focus+label {
-  color: #b92020;
-}
-/* label underline focus color */
-.input-field input[type=text]:focus {
-  border-bottom: 1px solid #b92020;
-  box-shadow: 0 1px 0 0 #b92020;
-}
-.submit-button {
-  /* font-size: 1.6rem!important; */
-  text-align: center;
+.results-section {
+  position: relative;
+  z-index: -1;
 }
 #search-button {
   color: white;
@@ -43,18 +60,27 @@ h1, h3 {
   outline: none;
 }
 .search-section {
-  margin-top: 25px;
-  /* text-align: center; */
+  margin-bottom: 40px;
+  margin-top: 60px;
 }
-.slogan {
-  color: gray;
-  font-size: 18px;
-  /* font-style: italic; */
+.select-label {
+  color: #1485CC!important;
+  font-size: 14px!important;
+}
+.sidenav li {
+  color: black!important;
+}
+#signin-button {
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+.submit-button {
+  /* font-size: 1.6rem!important; */
+  text-align: center;
 }
 .title {
-  color : #b92020;
   font-family: 'Pacifico', cursive;
-  /* font-family: 'Kaushan Script', cursive; */
   font-size: 36px!important;
 }
 
@@ -78,11 +104,17 @@ h1, h3 {
 }
 @media only screen and (max-width: 554px) {
   .jumbotron-text {
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 18px;
   }
   .nav-wrapper {
     padding: 0 5px;
+  }
+  .search-section {
+    margin-top: 45px;
+  }
+  .select-label {
+    font-size: 11px !important;
   }
   .title {
     font-size: 24px !important;
