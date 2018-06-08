@@ -19,6 +19,8 @@ class Destination(models.Model):
   oct = models.CharField(max_length=10, default='NONE')
   nov = models.CharField(max_length=10, default='NONE')
   dec = models.CharField(max_length=10, default='NONE')
+  lat = models.DecimalField(max_digits=9, decimal_places=6, default=000.000000)
+  long = models.DecimalField(max_digits=9, decimal_places=6, default=000.000000)
 
   def __str__(self):
     return self.city
