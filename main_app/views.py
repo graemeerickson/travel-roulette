@@ -64,28 +64,28 @@ def destinations_view(request):
       trip_purpose = form.cleaned_data['trip_purpose']
       selected_region = form.cleaned_data['selected_region']
   
-  if trip_purpose == 'Any' and selected_region == 'Any':
+  if trip_purpose == 'Anything' and selected_region == 'Anywhere':
     random_destination_id = random.randint(1,Destination.objects.count())
     random_destination = Destination.objects.get(id=random_destination_id)
-  elif trip_purpose == 'Any':
+  elif trip_purpose == 'Anything':
     random_destination_options = Destination.objects.filter(region=selected_region)
     random_destination = determine_random_destination(random_destination_options)
   elif trip_purpose == 'Adventure':
-    if selected_region == 'Any':
+    if selected_region == 'Anywhere':
       random_destination_options = Destination.objects.filter(adventure=True)
       random_destination = determine_random_destination(random_destination_options)
     else:
       random_destination_options = Destination.objects.filter(adventure=True).filter(region=selected_region)
       random_destination = determine_random_destination(random_destination_options)
   elif trip_purpose == 'Beach' or trip_purpose == 'Just somewhere warm!':
-    if selected_region == 'Any':
+    if selected_region == 'Anywhere':
       random_destination_options = Destination.objects.filter(beach=True)
       random_destination = determine_random_destination(random_destination_options)
     else:
       random_destination_options = Destination.objects.filter(beach=True).filter(region=selected_region)
       random_destination = determine_random_destination(random_destination_options)
   elif trip_purpose == 'Ski' or trip_purpose == 'Just somewhere cold!':
-    if selected_region == 'Any':
+    if selected_region == 'Anywhere':
       random_destination_options = Destination.objects.filter(ski=True)
       random_destination = determine_random_destination(random_destination_options)
     else:
@@ -106,7 +106,7 @@ def destinations_view(request):
   resp_food = requests.get(url=foursquare_url, params=foursquare_params_food).json()
   resp_drinks = requests.get(url=foursquare_url, params=foursquare_params_drinks).json()
 
-  destination = { 'city': random_destination.city, 'country': random_destination.country, 'sights': [], 'food': [], 'drinks': [] }
+  destination = { 'city': random_destination.city, 'country': random_destination.country, 'lat': random_destination.lat, 'long': random_destination.long, 'mapbox_api_token': settings.MAPBOX_API_TOKEN, 'sights': [], 'food': [], 'drinks': [] }
 
   for i in range(3):
     destination['sights'].append({
