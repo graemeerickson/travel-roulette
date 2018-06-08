@@ -77,6 +77,7 @@ DATABASES = {
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
+MAPBOX_API_TOKEN = env('MAPBOX_API_TOKEN')
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
