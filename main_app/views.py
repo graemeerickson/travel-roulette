@@ -1,10 +1,8 @@
-from .forms import LoginForm
+from .forms import LoginForm, SignupForm, DestinationSearchForm
 from .models import Destination
-from datetime import date
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 import simplejson as json
@@ -44,38 +42,66 @@ def logout_view(request):
   logout(request)
   return HttpResponseRedirect('/')
 
+def signup_view(request):
+  if request.method == 'POST':
+    form = SignupForm(request.POST)
+    if form.is_valid():
+      u = form.cleaned_data['username']
+      p = form.cleaned_data['password']
+      user = User.objects.create_user(username=u, password=p)
+      login(request, user)
+      return HttpResponseRedirect('/')
+    else:
+      print("The username and/or password is incorrect.")
+  else:
+    form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
+
 def destinations_view(request):
-  random_destination_id = random.randint(1,Destination.objects.count())
-  random_destination = Destination.objects.get(id=random_destination_id)
+  if request.method == 'POST':
+    form = DestinationSearchForm(request.POST)
+    if form.is_valid():
+      trip_purpose = form.cleaned_data['trip_purpose']
+      selected_region = form.cleaned_data['selected_region']
+  
+  if trip_purpose == 'Any' and selected_region == 'Any':
+    random_destination_id = random.randint(1,Destination.objects.count())
+    random_destination = Destination.objects.get(id=random_destination_id)
+  elif trip_purpose == 'Any':
+    random_destination_options = Destination.objects.filter(region=selected_region)
+    random_destination = determine_random_destination(random_destination_options)
+  elif trip_purpose == 'Adventure':
+    if selected_region == 'Any':
+      random_destination_options = Destination.objects.filter(adventure=True)
+      random_destination = determine_random_destination(random_destination_options)
+    else:
+      random_destination_options = Destination.objects.filter(adventure=True).filter(region=selected_region)
+      random_destination = determine_random_destination(random_destination_options)
+  elif trip_purpose == 'Beach' or trip_purpose == 'Just somewhere warm!':
+    if selected_region == 'Any':
+      random_destination_options = Destination.objects.filter(beach=True)
+      random_destination = determine_random_destination(random_destination_options)
+    else:
+      random_destination_options = Destination.objects.filter(beach=True).filter(region=selected_region)
+      random_destination = determine_random_destination(random_destination_options)
+  elif trip_purpose == 'Ski' or trip_purpose == 'Just somewhere cold!':
+    if selected_region == 'Any':
+      random_destination_options = Destination.objects.filter(ski=True)
+      random_destination = determine_random_destination(random_destination_options)
+    else:
+      random_destination_options = Destination.objects.filter(ski=True).filter(region=selected_region)
+      random_destination = determine_random_destination(random_destination_options)
+  
+  print('city:', random_destination.city)
   foursquare_version = '20180605'
   foursquare_url = 'https://api.foursquare.com/v2/venues/explore'
-  foursquare_params_sights = dict(
-    client_id=settings.CLIENT_ID,
-    client_secret=settings.CLIENT_SECRET,
-    v=foursquare_version,
-    near=random_destination.city + ', ' + random_destination.country,
-    section='sights',
-    locale='en',
-    limit=3
-  )
-  foursquare_params_food = dict(
-    client_id=settings.CLIENT_ID,
-    client_secret=settings.CLIENT_SECRET,
-    v=foursquare_version,
-    near=random_destination.city + ', ' + random_destination.country,
-    section='food',
-    locale='en',
-    limit=3
-  )
-  foursquare_params_drinks = dict(
-    client_id=settings.CLIENT_ID,
-    client_secret=settings.CLIENT_SECRET,
-    v=foursquare_version,
-    near=random_destination.city + ', ' + random_destination.country,
-    section='drinks',
-    locale='en',
-    limit=3
-  )
+  
+  foursquare_params_sights = dict(client_id=settings.CLIENT_ID, client_secret=settings.CLIENT_SECRET, v=foursquare_version, near=random_destination.city + ', ' + random_destination.country, section='sights', locale='en', limit=3)
+  
+  foursquare_params_food = dict(client_id=settings.CLIENT_ID, client_secret=settings.CLIENT_SECRET, v=foursquare_version, near=random_destination.city + ', ' + random_destination.country, section='food', locale='en', limit=3)
+  
+  foursquare_params_drinks = dict(client_id=settings.CLIENT_ID, client_secret=settings.CLIENT_SECRET, v=foursquare_version, near=random_destination.city + ', ' + random_destination.country, section='drinks', locale='en', limit=3)
+
   resp_sights = requests.get(url=foursquare_url, params=foursquare_params_sights).json()
   resp_food = requests.get(url=foursquare_url, params=foursquare_params_food).json()
   resp_drinks = requests.get(url=foursquare_url, params=foursquare_params_drinks).json()
@@ -113,6 +139,14 @@ def destinations_view(request):
     })
 
   return JsonResponse(destination)
+
+def determine_random_destination(random_destination_options):
+  random_destination_options_list = []
+  for dest in random_destination_options:
+    random_destination_options_list.append(dest.id)
+  tmp_random_destination_id = random.randint(0,len(random_destination_options_list)-1)
+  random_destination_id = random_destination_options_list[tmp_random_destination_id]
+  return Destination.objects.get(id=random_destination_id)
 
 def pretty_request(request):
   headers = ''
