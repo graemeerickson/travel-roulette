@@ -2,9 +2,9 @@ import os
 
 from os import environ
 
-root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
-env = environ.Env(DEBUG=(bool, False),) # set default values and casting
-environ.Env.read_env() # reading .env file
+root = os.environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
+env = os.environ.Env(DEBUG=(bool, False),) # set default values and casting
+os.environ.Env.read_env() # reading .env file
 
 SITE_ROOT = root()
 
