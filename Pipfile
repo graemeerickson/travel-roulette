@@ -5,7 +5,6 @@ verify_ssl = true
 [packages]
 django = "*"
 django-heroku = "*"
-environ-1.0 = "*"
 gunicorn = "*"
 psycopg2 ="*"
 
