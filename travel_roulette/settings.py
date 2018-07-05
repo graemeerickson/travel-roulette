@@ -1,4 +1,5 @@
 import os
+
 import environ
 
 root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
@@ -20,7 +21,7 @@ SECRET_KEY = '&2!9+g$jr=0$a8pzxrrc9p2ihy5)$b(tfu#9)-jow13c-&x+2l'
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['travel-roulette.herokuapp.com', 'localhost']
 
 # Application definition
 
@@ -101,15 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Los_Angeles'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
