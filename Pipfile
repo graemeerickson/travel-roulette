@@ -9,6 +9,8 @@ environ = "*"
 gunicorn = "*"
 psycopg2 ="*"
 django-environ = "*"
+django-cors-headers = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.6.4"
