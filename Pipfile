@@ -5,12 +5,13 @@ verify_ssl = true
 [packages]
 django = "*"
 django-heroku = "*"
-environ = "*"
 gunicorn = "*"
 psycopg2 ="*"
 django-environ = "*"
 django-cors-headers = "*"
 dj-database-url = "*"
+requests = "*"
+"psycopg2-binary" = "*"
 
 [requires]
 python_version = "3.6.4"
