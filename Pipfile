@@ -8,6 +8,7 @@ django-heroku = "*"
 environ = "*"
 gunicorn = "*"
 psycopg2 ="*"
+django-environ = "*"
 
 [requires]
 python_version = "3.6.4"
