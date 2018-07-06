@@ -21,7 +21,7 @@ SECRET_KEY = '&2!9+g$jr=0$a8pzxrrc9p2ihy5)$b(tfu#9)-jow13c-&x+2l'
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['travel-roulette.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['travel-roulette.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
