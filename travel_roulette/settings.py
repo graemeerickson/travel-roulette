@@ -2,9 +2,9 @@ import os
 
 import environ
 
-root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
+# root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env(DEBUG=(bool, False),) # set default values and casting
-environ.Env.read_env() # reading .env file
+environ.Env.read_env('.env') # reading .env file
 
 SITE_ROOT = root()
 
@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&2!9+g$jr=0$a8pzxrrc9p2ihy5)$b(tfu#9)-jow13c-&x+2l'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
