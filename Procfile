@@ -1,2 +1,2 @@
-web: gunicorn mysite.wsgi --log-file -
+web: gunicorn travel-roulette.wsgi --log-file -
 release: python manage.py migrate
