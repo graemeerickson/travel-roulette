@@ -1,5 +1,5 @@
 import os
-
+import dj_database_url
 import environ
 
 # root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
@@ -75,6 +75,9 @@ DATABASES = {
         'HOST': '127.0.0.1',
     }
 }
+# DATABASES['default'] = dj_database_url.config(
+#     default='postgres://......' # database URI
+#     )
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
