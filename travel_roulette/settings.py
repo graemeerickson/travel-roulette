@@ -4,7 +4,7 @@ import environ
 
 # root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env(DEBUG=(bool, False),) # set default values and casting
-environ.Env.read_env('.env') # reading .env file
+environ.Env.read_env('./travel_roulette/.env') # reading .env file
 
 # SITE_ROOT = root()
 
