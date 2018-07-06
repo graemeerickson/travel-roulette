@@ -12,6 +12,7 @@ django-cors-headers = "*"
 dj-database-url = "*"
 requests = "*"
 "psycopg2-binary" = "*"
+simplejson = "*"
 
 [requires]
 python_version = "3.6.6"
