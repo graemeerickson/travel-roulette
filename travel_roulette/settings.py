@@ -68,16 +68,17 @@ WSGI_APPLICATION = 'travel_roulette.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': ('travel_roulette'),
-        'HOST': '127.0.0.1',
-    }
-}
-# DATABASES['default'] = dj_database_url.config(
-#     default='postgres://......' # database URI
-#     )
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': ('travel_roulette'),
+#         'HOST': '127.0.0.1',
+#     }
+# }
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(
+    default=env('DATABASE_URL')
+)
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
