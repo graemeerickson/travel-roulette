@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'travel_roulette.wsgi.application'
 # }
 DATABASES = {}
 DATABASES['default'] = dj_database_url.config(
-    default=env('DATABASE_URL')
+    default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
 )
 
 CLIENT_ID = env('CLIENT_ID')
