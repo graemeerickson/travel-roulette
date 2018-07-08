@@ -58,6 +58,7 @@ def signup_view(request):
     return render(request, 'signup.html', {'form': form})
 
 def destinations_view(request):
+  print('request:', request)
   if request.method == 'POST':
     form = DestinationSearchForm(request.POST)
     if form.is_valid():
