@@ -38,7 +38,10 @@ $(document).ready(function () {
         element.val(response.city);
         appendDestinationDetails(response)
       },
-      error: handleError(response)
+      error: function (response) {
+        print('response:', response)
+        handleError
+      }
     })
   })
 });
