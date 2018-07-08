@@ -60,11 +60,16 @@ def signup_view(request):
 def destinations_view(request):
   print('request:', request)
   if request.method == 'POST':
+    print('request.method is POST')
     form = DestinationSearchForm(request.POST)
     if form.is_valid():
+      print('form is valid')
       trip_purpose = form.cleaned_data['trip_purpose']
       selected_region = form.cleaned_data['selected_region']
   
+  print('trip_purpose:', trip_purpose)
+  print('selected_region:', selected_region)
+
   if trip_purpose == 'Anything' and selected_region == 'Anywhere':
     random_destination_id = random.randint(1,Destination.objects.count())
     random_destination = Destination.objects.get(id=random_destination_id)
@@ -93,6 +98,7 @@ def destinations_view(request):
       random_destination_options = Destination.objects.filter(ski=True).filter(region=selected_region)
       random_destination = determine_random_destination(random_destination_options)
   
+  print('random_destination:', random_destination)
   print('city:', random_destination.city)
   foursquare_version = '20180605'
   foursquare_url = 'https://api.foursquare.com/v2/venues/explore'
@@ -133,11 +139,14 @@ def destinations_view(request):
   return JsonResponse(destination)
 
 def determine_random_destination(random_destination_options):
+  print('entered determine_random_destination function')
   random_destination_options_list = []
   for dest in random_destination_options:
     random_destination_options_list.append(dest.id)
+  
   tmp_random_destination_id = random.randint(0,len(random_destination_options_list)-1)
   random_destination_id = random_destination_options_list[tmp_random_destination_id]
+  
   return Destination.objects.get(id=random_destination_id)
 
 def pretty_request(request):
