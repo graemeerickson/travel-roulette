@@ -38,7 +38,7 @@ $(document).ready(function () {
         element.val(response.city);
         appendDestinationDetails(response)
       },
-      error: handleError
+      error: handleError(response)
     })
   })
 });
@@ -128,7 +128,8 @@ const appendDestinationDetails = (destination) => {
   appendDrinks(destination.drinks);
 }
 
-const handleError = () => {
+const handleError = (response) => {
+  print('response:', response)
   $('#destination-top-section-error').empty()
   $('#destination-top-section-map').empty()
   $('#destination-top-section-sights').empty()
