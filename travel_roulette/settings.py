@@ -9,7 +9,8 @@ environ.Env.read_env() # reading .env file
 # SITE_ROOT = root()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -75,10 +76,15 @@ WSGI_APPLICATION = 'travel_roulette.wsgi.application'
 #         'HOST': '127.0.0.1',
 #     }
 # }
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(
-    default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
-)
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config(
+#     default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
+# )
+DATABASES = {
+    default: dj_database_url.config(
+        default=env('DATABASE_URL')
+    )
+}
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
@@ -117,6 +123,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILE_DIRS = (
-    os.path.join(BASE_DIR, 'travel_roulette')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
 )
