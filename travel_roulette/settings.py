@@ -76,15 +76,15 @@ WSGI_APPLICATION = 'travel_roulette.wsgi.application'
 #         'HOST': '127.0.0.1',
 #     }
 # }
-# DATABASES = {}
-# DATABASES['default'] = dj_database_url.config(
-#     default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
-# )
-DATABASES = {
-    default: dj_database_url.config(
-        default=env('DATABASE_URL')
-    )
-}
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(
+    default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
+)
+# DATABASES = {
+#     default: dj_database_url.config(
+#         default=env('DATABASE_URL')
+#     )
+# }
 
 CLIENT_ID = env('CLIENT_ID')
 CLIENT_SECRET = env('CLIENT_SECRET')
