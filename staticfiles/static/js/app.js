@@ -39,7 +39,7 @@ $(document).ready(function () {
         appendDestinationDetails(response)
       },
       error: function (response) {
-        print('response:', response)
+        console.log('response:', response)
         handleError
       }
     })
@@ -132,7 +132,6 @@ const appendDestinationDetails = (destination) => {
 }
 
 const handleError = (response) => {
-  print('response:', response)
   $('#destination-top-section-error').empty()
   $('#destination-top-section-map').empty()
   $('#destination-top-section-sights').empty()
