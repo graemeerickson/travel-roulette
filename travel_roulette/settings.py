@@ -6,8 +6,6 @@ import environ
 env = environ.Env(DEBUG=(bool, False),) # set default values and casting
 environ.Env.read_env('.env_file') # reading .env file
 
-# SITE_ROOT = root()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -15,10 +13,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&2!9+g$jr=0$a8pzxrrc9p2ihy5)$b(tfu#9)-jow13c-&x+2l'
+SECRET_KEY = env('SECRET_KEY')
+CLIENT_ID = env('CLIENT_ID')
+CLIENT_SECRET = env('CLIENT_SECRET')
+MAPBOX_API_TOKEN = env('MAPBOX_API_TOKEN')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['travel-roulette.herokuapp.com', 'localhost', '127.0.0.1']
@@ -65,46 +65,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'travel_roulette.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': ('travel_roulette'),
-#         'HOST': '127.0.0.1',
-#     }
-# }
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(
-    default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
-)
-# DATABASES = {
-#     default: dj_database_url.config(
-#         default=env('DATABASE_URL')
-#     )
-# }
-
-CLIENT_ID = env('CLIENT_ID')
-CLIENT_SECRET = env('CLIENT_SECRET')
-MAPBOX_API_TOKEN = env('MAPBOX_API_TOKEN')
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
 # Internationalization
@@ -116,12 +84,35 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
+# HEROKU SETTINGS
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'main_app'),
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(
+    default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
 )
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'main_app/static'),
+    os.path.join(PROJECT_ROOT, 'main_app'),
+)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# LOCAL SETTINGS
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': ('travel_roulette'),
+#         'HOST': '127.0.0.1',
+#     }
+# }
+
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
