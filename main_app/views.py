@@ -131,7 +131,6 @@ def destinations_view(request):
   return JsonResponse(destination)
 
 def determine_random_destination(random_destination_options):
-  print('entered determine_random_destination function')
   random_destination_options_list = []
   for dest in random_destination_options:
     random_destination_options_list.append(dest.id)
