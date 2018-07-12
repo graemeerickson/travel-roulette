@@ -58,17 +58,11 @@ def signup_view(request):
     return render(request, 'signup.html', {'form': form})
 
 def destinations_view(request):
-  print('request:', request)
   if request.method == 'POST':
-    print('request.method is POST')
     form = DestinationSearchForm(request.POST)
     if form.is_valid():
-      print('form is valid')
       trip_purpose = form.cleaned_data['trip_purpose']
       selected_region = form.cleaned_data['selected_region']
-  
-  print('trip_purpose:', trip_purpose)
-  print('selected_region:', selected_region)
 
   if trip_purpose == 'Anything' and selected_region == 'Anywhere':
     random_destination_id = random.randint(1,Destination.objects.count())
@@ -97,9 +91,7 @@ def destinations_view(request):
     else:
       random_destination_options = Destination.objects.filter(ski=True).filter(region=selected_region)
       random_destination = determine_random_destination(random_destination_options)
-  
-  print('random_destination:', random_destination)
-  print('city:', random_destination.city)
+
   foursquare_version = '20180605'
   foursquare_url = 'https://api.foursquare.com/v2/venues/explore'
   
