@@ -92,7 +92,6 @@ DATABASES['default'] = dj_database_url.config(
     default='postgres://nkvimkjvazmesa:18a23499c698a36ffdaeaa8bbd40f4a9f0035a2277ae551b718a8330c5b6a057@ec2-184-73-174-171.compute-1.amazonaws.com:5432/d1mvngfp0u88jb'
 )
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
