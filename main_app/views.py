@@ -12,7 +12,7 @@ import requests
 def index(request):
   print('INDEX ROUTE')
   destinations = Destination.objects.all()
-  print('INDEX ROUTE2')
+  print('destinations:', destinations)
   return render(request, 'index.html', {'destinations': destinations})
 
 def profile(request, username):
