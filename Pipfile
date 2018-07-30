@@ -6,14 +6,12 @@ verify_ssl = true
 django = "*"
 django-heroku = "*"
 gunicorn = "*"
-psycopg2 ="*"
 django-environ = "*"
 django-cors-headers = "*"
 dj-database-url = "*"
 requests = "*"
-"psycopg2-binary" = "*"
 simplejson = "*"
 whitenoise = "*"
 
 [requires]
-python_version = "3.6.6"
+python_version = "3.6.4"

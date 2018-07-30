@@ -10,6 +10,7 @@ import random
 import requests
 
 def index(request):
+  print('INDEX ROUTE')
   destinations = Destination.objects.all()
   return render(request, 'index.html', {'destinations': destinations})
 
