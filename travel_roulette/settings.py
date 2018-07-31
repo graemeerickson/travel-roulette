@@ -1,6 +1,6 @@
 import os
 import dj_database_url
-import environ
+import django-environ
 
 # root = environ.Path(__file__) # three folder back (/a/b/c/ - 3 = /)
 env = environ.Env(DEBUG=(bool, False),) # set default values and casting
